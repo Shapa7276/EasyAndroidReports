@@ -1,3 +1,5 @@
+# Collection of Intent Redirection bug
+
 Unvalidated Intent URI:
 An attacker could craft a malicious link containing an intent URI that redirects the user to a phishing site or installs a malware app.
 
