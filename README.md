@@ -1,3 +1,3 @@
 # EasyAndroidReports
 
-Colleting all Android cool bugs in single repor
+Colleting cool android bugs in single repo
