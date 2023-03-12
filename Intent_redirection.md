@@ -34,27 +34,27 @@ An attacker could intercept the intent and modify the URI to redirect the user t
 ## Vulnerable code
 
 Unvalidated Intent URI:
-```
+```java
 String url = getIntent().getStringExtra("url");
 Intent intent = new Intent(Intent.ACTION_VIEW);
 intent.setData(Uri.parse(url));
 startActivity(intent);
 ```
 Dynamic Class Name:
-```
+```java
 String className = getIntent().getStringExtra("class_name");
 Intent intent = new Intent();
 intent.setClassName(getPackageName(), className);
 startActivity(intent);
 ```
 Unvalidated Intent Action:
-```
+```java
 String action = getIntent().getStringExtra("action");
 Intent intent = new Intent(action);
 startActivity(intent);
 ```
 Implicit Intent without specifying package:
-```
+```java
 Intent intent = new Intent(Intent.ACTION_SEND);
 intent.setType("text/plain");
 intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
@@ -73,7 +73,7 @@ startActivity(intent);
 
 ```
 Using an Intent Filter for Sensitive Data:
-```
+```java
 Intent intent = new Intent();
 intent.setAction(Intent.ACTION_SEND);
 intent.setType("text/plain");
@@ -88,14 +88,14 @@ intent.setComponent(new ComponentName("com.example.app", "com.example.app.MainAc
 startActivity(intent);
 ```
 Intent without Permission Check:
-```
+```java
 Intent intent = new Intent();
 intent.setAction("com.example.action");
 intent.putExtra("data", "Sensitive Data");
 startActivity(intent);
 ```
 Unprotected Broadcast Receiver:
-```
+```java
 public class MyBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -113,20 +113,20 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 ```
 
 Implicit Intent with Data Scheme:
-```
+```java
 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://example.com"));
 startActivity(intent);
 
 ```
 
 Unvalidated Intent URI:
-```
+```java
 Uri uri = Uri.parse("http://malicious-site.com");
 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 startActivity(intent);
 ```
 Dynamic Class Name:
-```
+```java
 String className = "com.example.malware.MaliciousActivity";
 Intent intent = new Intent();
 intent.setClassName(getApplicationContext(), className);
@@ -136,13 +136,13 @@ startActivity(intent);
 ## Exploit code 
 
 Unvalidated Intent Action:
-```
+```java
 String action = "com.example.malware.ACTION_ATTACK";
 Intent intent = new Intent(action);
 startActivity(intent);
 ```
 Implicit Intent without specifying package:
-```
+```java
 Intent intent = new Intent(Intent.ACTION_SEND);
 intent.setType("text/plain");
 intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
@@ -150,33 +150,33 @@ intent.putExtra(Intent.EXTRA_TEXT, "Content");
 startActivity(Intent.createChooser(intent, "Send mail"));
 ```
 Hardcoded External App Package Name:
-```
+```java
 Intent intent = getPackageManager().getLaunchIntentForPackage("com.example.malware");
 startActivity(intent);
 ```
 Using an Intent Filter for Sensitive Data:
-```
+```java
 Intent intent = new Intent();
 intent.setAction("com.example.SENSITIVE_DATA");
 intent.putExtra("password", "sensitive-data");
 sendBroadcast(intent);
 ```
 Explicit Intent with Set Component:
-```
+```java
 ComponentName component = new ComponentName("com.example.malware", "com.example.malware.MaliciousActivity");
 Intent intent = new Intent();
 intent.setComponent(component);
 startActivity(intent);
 ```
 Intent without Permission Check:
-```
+```java
 Uri uri = Uri.parse("content://com.example.provider/data");
 Intent intent = new Intent(Intent.ACTION_VIEW);
 intent.setData(uri);
 startActivity(intent);
 ```
 Unprotected Broadcast Receiver:
-```
+```java
 public class MyBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -186,7 +186,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 }
 ```
 Implicit Intent with Data Scheme:
-```
+```java
 Uri uri = Uri.parse("http://malicious-site.com");
 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 startActivity(intent);
